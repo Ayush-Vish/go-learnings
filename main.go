@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 // "bufio"
 
 // "os"
@@ -220,20 +218,56 @@ import "fmt"
 
 // }
 
-type User struct {
-	Name  string
-	Email string
-	Age   int
-}
+// type User struct {
+// 	Name  string
+// 	Email string
+// 	Age   int
+// }
 
-func (u User) GetDetails() {
-	fmt.Println("Name : ", u.Name)
-	fmt.Println("Email : ", u.Email)
-	fmt.Println("Age : ", u.Age)
-}
+// func (u User) GetDetails() {
+// 	fmt.Println("Name : ", u.Name)
+// 	fmt.Println("Email : ", u.Email)
+// 	fmt.Println("Age : ", u.Age)
+// }
 
-func main() {
-	ayush := User{"ayush", "a@gmail.com", 20}
-	ayush.GetDetails()
+// func main() {
+// 	ayush := User{"ayush", "a@gmail.com", 20}
+// 	ayush.GetDetails()
+// 	root := Node{data: 0, left: nil, right: nil}
+// 	root =*makeTree(&root);
+// 	fmt.Println(root);
 
-}
+// }
+
+// func makeTree(root *Node) *Node {
+
+// 	dataReader := bufio.NewReader(os.Stdin)
+// 	fmt.Println("Enter the data : ")
+// 	val, _ := dataReader.ReadString('\n')
+// 	val = strings.TrimSpace(val)
+// 	intval, err := strconv.Atoi(val)
+// 	if err != nil {
+// 		fmt.Println("Error in the input")
+// 		return root;
+
+// 	}
+// 	if intval == -1 {
+// 		return nil
+// 	}
+// 	root = &Node{data: intval, left: nil, right: nil}
+
+// 	fmt.Println("Enter the left child of the node : " , root.data);
+// 	root.left = makeTree(root.left);
+// 	fmt.Println("Enter the right child of the node : " , root.data);
+// 	root.right = makeTree(root.right);
+// 	return root;
+
+// }
+
+// type Node struct {
+// 	data  int
+// 	left  *Node
+// 	right *Node
+// }
+
+
