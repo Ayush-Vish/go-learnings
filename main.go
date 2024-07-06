@@ -270,4 +270,28 @@ package main
 // 	right *Node
 // }
 
+// Files
+// func main() {
+// 	content := "Hellosdasdasdcxzcxzsadasdasd World"
+// 	file, err := os.Create("test.txt")
+// 	if err != nil {
+// 		panic(err)
+// 	}
+// 	length, err := io.WriteString(file, content)
+// 	if err != nil {
+// 		panic(err)
+// 	}
+// 	fmt.Println("Length of the file : ", length)
+// 	defer file.Close()
+// 	readFile("test.txt")
+// }
+// func readFile(filename string) {
+// 	dataByte, _ := ioutil.ReadFile(filename)
+// 	fmt.Println(string(dataByte))
+// }
 
+// WEb Reqwuest
+
+func main() {
+
+}
