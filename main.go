@@ -1,12 +1,6 @@
 package main
 
-import (
-	"bufio"
-	"fmt"
-	"os"
-	"strconv"
-	"strings"
-)
+import "fmt"
 
 // "bufio"
 
@@ -181,25 +175,65 @@ import (
 
 // Swith case
 
-func main() {
-	var reader = bufio.NewReader(os.Stdin)
-	fmt.Println("Enter the number")
-	astr, _ := reader.ReadString('\n')
-	a, error := strconv.ParseFloat(strings.TrimSpace(astr), 64)
-	if error != nil {
-		fmt.Println(error)
+// func main() {
+// 	rand.Seed(time.Now().UnixNano())
+// 	num := rand.Intn(6) + 1
+// 	fmt.Println("Num => ", num)
+// 	switch num {
+// 	case 1:
+// 		fmt.Println("onw ")
+// 	default:
+// 		fmt.Println("Anything ")
+// 	}
+// }
 
-	}
-	fmt.Println(a)
-	switch a {
-	case 1:
-		fmt.Println("a is 1")
-	case 2:
-		fmt.Println("a is 2")
-	case 3:
-		fmt.Println("a is 3");
-		
-	default :
-		fmt.Println("Defralt ");
-	}
+// Loops
+// func main() {
+// 	days := []string{"Sunday", "Tuesday", "Wednesday"}
+
+// 	for i := 0; i < len(days); i++ {
+// 		fmt.Println(days[i])
+// 	}
+
+// 	for i, day := range days {
+// 		fmt.Println(i, day)
+// 	}
+
+// }
+
+// func main() {
+// 	fmt.Println("Hello World")
+// 	f(1, "dfhgsjhdf")
+// 	fd(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+// }
+
+// func f(i int, s string) string {
+// 	fmt.Println("waesdasasa World", i, s)
+// 	return s
+// }
+
+// func fd(val ...int) {
+// 	fmt.Println(val)
+// 	for i := range val {
+// 		fmt.Println(val[i])
+// 	}
+
+// }
+
+type User struct {
+	Name  string
+	Email string
+	Age   int
+}
+
+func (u User) GetDetails() {
+	fmt.Println("Name : ", u.Name)
+	fmt.Println("Email : ", u.Email)
+	fmt.Println("Age : ", u.Age)
+}
+
+func main() {
+	ayush := User{"ayush", "a@gmail.com", 20}
+	ayush.GetDetails()
+
 }
