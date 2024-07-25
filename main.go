@@ -1,5 +1,13 @@
 package main
 
+import (
+	"encoding/json"
+	"fmt"
+	"net/http"
+
+	"github.com/gorilla/mux"
+)
+
 // "bufio"
 
 // "os"
@@ -234,8 +242,8 @@ package main
 // 	ayush := User{"ayush", "a@gmail.com", 20}
 // 	ayush.GetDetails()
 // 	root := Node{data: 0, left: nil, right: nil}
-// 	root =*makeTree(&root);
-// 	fmt.Println(root);
+// 	root = *makeTree(&root)
+// 	fmt.Println(root)
 
 // }
 
@@ -291,6 +299,97 @@ package main
 // }
 
 // WEb Reqwuest
+
+// const url = "https://jsonplaceholder.typicode.com/posts"
+
+// func main() {
+// 	response, err := http.Get(url)
+// 	if err != nil {
+// 		panic(err)
+// 	}
+// 	defer response.Body.Close()
+// 	fmt.Println("Status Code : ", response)
+// 	defer response.Body.Close()
+// 	data, _ := ioutil.ReadAll(response.Body)
+// 	fmt.Println(string(data))
+
+// }
+
+// GO MOD ->
+
+// func main() {
+// 	fmt.Println("Hello ")
+// 	r := mux.NewRouter()
+// 	r.HandleFunc("/", home).Methods("GET")
+// 	log.Fatal(http.ListenAndServe(":4000", r))
+
+// }
+// func home(w http.ResponseWriter, r *http.Request) {
+// 	w.Write([]byte("<h1> Hello Eodsljknfgsdxlk </h1>"))
+// }
+
+// APis
+
+//  Models
+
+type Course struct {
+	ID     string  `json:"id"`
+	Name   string  `json:"name"`
+	Author *Author `json:"author"`
+	Price  int     `json:"price"`
+}
+
+type Author struct {
+	Fullname string `json:"fullname"`
+	Website  string `json`
+}
+
+// fake database
+var courses []Course
+
+// Middleware
+func (c *Course) isEmpty() bool {
+	return c.Name == ""
+}
+
+func getAllCourses(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Get all")
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(courses)
+
+}
+
+func getOneCourse(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Get one")
+	w.Header().Set("Content-Type", "application/json")
+	params := mux.Vars(r)
+	for _, item := range courses {
+		if item.ID == params["id"] {
+			json.NewEncoder(w).Encode(item)
+			return
+		}
+	}
+	json.NewEncoder(w).Encode("No course found with the id ")
+	return
+}
+
+func createOneCourse(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	if r.Body == nil {
+		json.NewEncoder(w).Encode("No data found")
+		return
+	}
+
+	var course Course
+	_ = json.NewDecoder(r.Body).Decode(&course)
+	if course.isEmpty() {
+		json.NewEncoder(w).Encode("No data found")
+		return
+
+	}
+	courses = append(courses, course)
+
+}
 
 func main() {
 
