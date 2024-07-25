@@ -3,7 +3,11 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"log"
+	"math/rand"
 	"net/http"
+	"strconv"
+	"time"
 
 	"github.com/gorilla/mux"
 )
@@ -341,7 +345,7 @@ type Course struct {
 
 type Author struct {
 	Fullname string `json:"fullname"`
-	Website  string `json`
+	Website  string `json:website`
 }
 
 // fake database
@@ -387,10 +391,68 @@ func createOneCourse(w http.ResponseWriter, r *http.Request) {
 		return
 
 	}
+
+	// Generate the id
+	rand.Seed(time.Now().UnixNano())
+	course.ID = strconv.Itoa(rand.Intn(1000))
+
 	courses = append(courses, course)
+	json.NewEncoder(w).Encode(courses)
+
+}
+
+func updateOneCourse(w http.ResponseWriter, r *http.Request) {
+
+	w.Header().Set("Content-Type", "application/json")
+	params := mux.Vars(r)
+	for i, course := range courses {
+		if course.ID == params["id"] {
+			courses = append(courses[:i], courses[i+1:]...)
+			var course Course
+			_ = json.NewDecoder(r.Body).Decode(&course)
+			course.ID = params["id"]
+			courses = append(courses, course)
+			json.NewEncoder(w).Encode(course)
+			return
+		}
+	}
+
+	json.NewEncoder(w).Encode("No course with Id Found ")
+	return
+
+}
+
+func deleteOneCourse(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	params := mux.Vars(r)
+	for i, course := range courses {
+		if params["id"] == course.ID {
+			courses = append(courses[:i], courses[i+1:]...)
+			json.NewEncoder(w).Encode(course)
+			return
+		}
+	}
+	json.NewEncoder(w).Encode("No Course with  the Id Found ! ")
 
 }
 
 func main() {
+	fmt.Println("Hello World")
+	r := mux.NewRouter()
+
+	courses = append(courses, Course{ID: "2", Name: "Ayush", Author: &Author{Fullname: "sjfdnbjskand", Website: "dsfkjbsdkjfnb"}, Price: 30000})
+	courses = append(courses, Course{ID: "3", Name: "Ayush", Author: &Author{Fullname: "sdsd", Website: "dsds"}, Price: 303423000})
+
+	r.HandleFunc("/api/courses", getAllCourses).Methods("GET")	
+	r.HandleFunc("/api/courses/{id}", getOneCourse).Methods("GET")
+	r.HandleFunc("/api/courses", createOneCourse).Methods("POST")
+	r.HandleFunc("/api/courses/{id}", updateOneCourse).Methods("PUT")
+	r.HandleFunc("/api/courses/{id}", deleteOneCourse).Methods("DELETE")
+
+
+	log.Fatal(http.ListenAndServe(":4000", r))
 
 }
+
+
+
